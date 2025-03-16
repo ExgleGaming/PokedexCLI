@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func main() {
@@ -9,6 +10,7 @@ func main() {
 }
 
 func cleanInput(text string) []string {
-	var test []string
-	return test
+	trimmed := strings.TrimSpace(text)
+	lowercased := strings.ToLower(trimmed)
+	return strings.Fields(lowercased)
 }
