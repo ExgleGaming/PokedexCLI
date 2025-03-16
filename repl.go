@@ -21,9 +21,22 @@ func startRepl() {
 			continue
 		}
 
-		// Printing the user's command. This will change soon
 		commandName := input[0]
-		fmt.Printf("Your command was: %s\n", commandName)
+		command, ok := getCommands()[commandName]
+		if !ok {
+			command = getCommands()["help"]
+		}
+
+		// Check the command and call it if a usable command
+		switch command.name {
+		case "exit":
+			commandExit()
+		case "help":
+			commandHelp()
+		default:
+			fmt.Println("Unknown command. Please try again")
+			continue
+		}
 	}
 }
 
@@ -31,4 +44,43 @@ func startRepl() {
 func cleanInput(text string) []string {
 	lowercased := strings.ToLower(text)
 	return strings.Fields(lowercased)
+}
+
+// CLI command struct
+type cliCommand struct {
+	name        string
+	description string
+	callback    func() error
+}
+
+// Function of the CLI commands and returns them. More will be added
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
+		"help": {
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
+		},
+	}
+}
+
+func commandHelp() error {
+	fmt.Println("Welcome to the Pokedex!")
+	fmt.Println("Usage:\n")
+	for _, cliCmd := range getCommands() {
+		fmt.Printf("%s: %s\n", cliCmd.name, cliCmd.description)
+	}
+	fmt.Println()
+	return nil
+}
+
+func commandExit() error {
+	fmt.Print("Closing the Pokedex... Goodbye!")
+	os.Exit(0)
+	return nil
 }
