@@ -40,7 +40,7 @@ func startRepl() {
 	}
 }
 
-// This function is to clean up the users command text
+// This function is to clean up the users input text
 func cleanInput(text string) []string {
 	lowercased := strings.ToLower(text)
 	return strings.Fields(lowercased)
@@ -67,20 +67,4 @@ func getCommands() map[string]cliCommand {
 			callback:    commandExit,
 		},
 	}
-}
-
-func commandHelp() error {
-	fmt.Println("Welcome to the Pokedex!")
-	fmt.Println("Usage:\n")
-	for _, cliCmd := range getCommands() {
-		fmt.Printf("%s: %s\n", cliCmd.name, cliCmd.description)
-	}
-	fmt.Println()
-	return nil
-}
-
-func commandExit() error {
-	fmt.Print("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
 }
