@@ -3,37 +3,39 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 )
 
 const mapSize = 20
 
 type pokeMap struct {
-	Id   int    `json:"id"`
+	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
 func commandMap() error {
 	for i := range mapSize {
-		location := getMap(i)
-		fmt.Println(location[i].Name)
+		location, _ := getMap(i)
+		fmt.Println(location.Name)
 	}
 	return nil
 }
 
-func getMap(index int) []pokeMap {
+func getMap(index int) (pokeMap, error) {
+	var newPokeMap pokeMap
+
+	// HTTP request to pokeapi to get location area
 	url := fmt.Sprintf("https://pokeapi.co/api/v2/location-area/%v/", index)
 	res, err := http.Get(url)
 	if err != nil {
-		log.Fatalln(err)
+		return newPokeMap, fmt.Errorf("Error with GET request to PokeAPI: %v", err)
 	}
 	defer res.Body.Close()
 
-	var currentMap []pokeMap
 	decoder := json.NewDecoder(res.Body)
-	if err := decoder.Decode(&currentMap); err != nil {
-		log.Fatalln(err)
+	if err := decoder.Decode(&newPokeMap); err != nil {
+		return newPokeMap, fmt.Errorf("Error with decoding JSON data: %v", err)
 	}
-	return currentMap
+
+	return newPokeMap, nil
 }

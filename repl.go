@@ -70,7 +70,7 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "Displays 20 different map locations",
+			description: "Displays next 20 map locations",
 			callback:    commandMap,
 		},
 	}
