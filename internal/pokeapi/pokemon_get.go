@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// ListLocations -
+// Get Pokemon -
 func (c *Client) GetPokemon(pokemonName string) (Pokemon, error) {
 	url := baseURL + "/pokemon/" + pokemonName
 
