@@ -32,6 +32,7 @@ func getMap(index int) (pokeMap, error) {
 	}
 	defer res.Body.Close()
 
+	// Encoding JSON data to my poke map struct
 	decoder := json.NewDecoder(res.Body)
 	if err := decoder.Decode(&newPokeMap); err != nil {
 		return newPokeMap, fmt.Errorf("Error with decoding JSON data: %v", err)
