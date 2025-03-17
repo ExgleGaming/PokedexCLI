@@ -1,8 +1,16 @@
 package main
 
-import "github.com/exglegaming/PokedexCLI/internal/pokeapi"
+import (
+	"time"
+
+	"github.com/exglegaming/PokedexCLI/internal/pokeapi"
+)
 
 func main() {
-	pokeClient := pokeapi.New()
-	startRepl(pokeClient)
+	pokeClient := pokeapi.NewClient(5 * time.Second)
+	cfg := &config{
+		pokeapiClient: pokeClient,
+	}
+
+	startRepl(cfg)
 }
