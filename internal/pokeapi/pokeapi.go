@@ -37,10 +37,26 @@ type LocationAreasResp struct {
 	} `json:"results"`
 }
 
-func (c *Client) ListLocationAreas() ([]string, error) {
-	endpoint := c.baseURL + "location-area"
-	if c.nextURL != nil {
-		endpoint = *c.nextURL
+func (c *Client) ListLocationAreas(direction string) ([]string, error) {
+	var endpoint string
+
+	// Safeguard against invalid pagination attempts
+	if direction == "next" {
+		if c.nextURL == nil && c.prevURL == nil {
+			// This is the first call
+			endpoint = c.baseURL + "location-area"
+		} else if c.nextURL == nil {
+			return nil, fmt.Errorf("You're already on the last page")
+		} else {
+			endpoint = *c.nextURL
+		}
+	} else if direction == "prev" {
+		if c.prevURL == nil {
+			return nil, fmt.Errorf("You're already on the first page")
+		}
+		endpoint = *c.prevURL
+	} else if direction == "" {
+		endpoint = c.baseURL + "location-area"
 	}
 
 	res, err := c.httpClient.Get(endpoint)

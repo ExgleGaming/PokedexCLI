@@ -6,8 +6,8 @@ import (
 	"github.com/exglegaming/PokedexCLI/internal/pokeapi"
 )
 
-func commandMap(c *pokeapi.Client) error {
-	locations, err := c.ListLocationAreas("next")
+func commandMapBack(client *pokeapi.Client) error {
+	locations, err := client.ListLocationAreas("prev")
 	if err != nil {
 		fmt.Println(err)
 		return err

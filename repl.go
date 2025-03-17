@@ -37,6 +37,8 @@ func startRepl(pokeClient *pokeapi.Client) {
 			commandHelp(pokeClient)
 		case "map":
 			commandMap(pokeClient)
+		case "mapb":
+			commandMapBack(pokeClient)
 		default:
 			fmt.Println("Unknown command. Please try again")
 			continue
@@ -74,6 +76,11 @@ func getCommands() map[string]cliCommand {
 			name:        "map",
 			description: "Displays next 20 map locations",
 			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Displays the previous 20 map locations",
+			callback:    commandMapBack,
 		},
 	}
 }
