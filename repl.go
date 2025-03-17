@@ -33,6 +33,8 @@ func startRepl() {
 			commandExit()
 		case "help":
 			commandHelp()
+		case "map":
+			commandMap()
 		default:
 			fmt.Println("Unknown command. Please try again")
 			continue
@@ -65,6 +67,11 @@ func getCommands() map[string]cliCommand {
 			name:        "exit",
 			description: "Exit the Pokedex",
 			callback:    commandExit,
+		},
+		"map": {
+			name:        "map",
+			description: "Displays 20 different map locations",
+			callback:    commandMap,
 		},
 	}
 }
