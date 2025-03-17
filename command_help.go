@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/exglegaming/PokedexCLI/internal/pokeapi"
 )
 
-func commandHelp() error {
+func commandHelp(client *pokeapi.Client) error {
 	fmt.Println()
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")

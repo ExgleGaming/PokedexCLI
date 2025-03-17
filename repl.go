@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/exglegaming/PokedexCLI/internal/pokeapi"
 )
 
-func startRepl() {
+func startRepl(pokeClient *pokeapi.Client) {
 	// Creates a new scanner for user input
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -30,11 +32,11 @@ func startRepl() {
 		// Check the command and call it if a usable command
 		switch command.name {
 		case "exit":
-			commandExit()
+			commandExit(pokeClient)
 		case "help":
-			commandHelp()
+			commandHelp(pokeClient)
 		case "map":
-			commandMap()
+			commandMap(pokeClient)
 		default:
 			fmt.Println("Unknown command. Please try again")
 			continue
@@ -52,7 +54,7 @@ func cleanInput(text string) []string {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*pokeapi.Client) error
 }
 
 // Function of the CLI commands and returns them. More will be added
