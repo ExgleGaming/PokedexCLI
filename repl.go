@@ -36,7 +36,7 @@ func startRepl(cfg *config) {
 			}
 			continue
 		} else {
-			fmt.Println("Unknown command")
+			fmt.Println("Unknown command. Please try again or use the 'help' command to see all commands.")
 			continue
 		}
 	}
