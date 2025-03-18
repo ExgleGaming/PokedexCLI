@@ -13,5 +13,6 @@ func main() {
 		pokeapiClient: pokeClient,
 	}
 
+	introText()
 	startRepl(cfg)
 }
